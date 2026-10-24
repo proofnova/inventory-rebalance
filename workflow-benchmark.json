@@ -1,0 +1,123 @@
+{
+  "checked_at": "2026-10-24T04:34:51.173Z",
+  "not_a_model_benchmark": true,
+  "resource": "inventory-rebalance",
+  "example": "undo greedy cheapest arc",
+  "input": {
+    "stocks": [
+      {
+        "site": "A",
+        "item": "x",
+        "available": 1,
+        "target": 0
+      },
+      {
+        "site": "B",
+        "item": "x",
+        "available": 1,
+        "target": 0
+      },
+      {
+        "site": "C",
+        "item": "x",
+        "available": 0,
+        "target": 1
+      },
+      {
+        "site": "D",
+        "item": "x",
+        "available": 0,
+        "target": 1
+      }
+    ],
+    "routes": [
+      {
+        "item": "x",
+        "from": "A",
+        "to": "C",
+        "unit_cost": 1
+      },
+      {
+        "item": "x",
+        "from": "A",
+        "to": "D",
+        "unit_cost": 2
+      },
+      {
+        "item": "x",
+        "from": "B",
+        "to": "C",
+        "unit_cost": 2
+      },
+      {
+        "item": "x",
+        "from": "B",
+        "to": "D",
+        "unit_cost": 100
+      }
+    ]
+  },
+  "metric": "declared transfer cost units; lower is better at the same two units moved",
+  "baseline": {
+    "algorithm": "sort arcs by unit cost and allocate available supply/demand greedily",
+    "cost": 101,
+    "moved": 2,
+    "transfers": [
+      {
+        "item": "x",
+        "from": "A",
+        "to": "C",
+        "unit_cost": 1,
+        "units": 1
+      },
+      {
+        "item": "x",
+        "from": "B",
+        "to": "D",
+        "unit_cost": 100,
+        "units": 1
+      }
+    ]
+  },
+  "candidate": {
+    "algorithm": "residual-network min-cost flow",
+    "cost": 4,
+    "moved": 2,
+    "full_result": {
+      "transfers": [
+        {
+          "item": "x",
+          "from": "A",
+          "to": "D",
+          "quantity": 1,
+          "unit_cost": 2,
+          "cost": 2
+        },
+        {
+          "item": "x",
+          "from": "B",
+          "to": "C",
+          "quantity": 1,
+          "unit_cost": 2,
+          "cost": 2
+        }
+      ],
+      "shortages": [],
+      "totals": [
+        {
+          "item": "x",
+          "moved": 2,
+          "cost": 4
+        }
+      ],
+      "summary": {
+        "moved": 2,
+        "cost": 4,
+        "shortage_units": 0
+      }
+    }
+  },
+  "absolute_reduction": 97,
+  "relative_reduction": 0.9603960396039604,
+  "scope": "One synthetic worked counterexample, not an average saving, vendor comparison, real invoice or model accuracy."
+}
